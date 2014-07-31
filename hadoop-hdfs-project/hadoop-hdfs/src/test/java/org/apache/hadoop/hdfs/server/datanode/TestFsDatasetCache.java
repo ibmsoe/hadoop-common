@@ -88,13 +88,14 @@ import com.google.common.primitives.Ints;
 public class TestFsDatasetCache {
   private static final Log LOG = LogFactory.getLog(TestFsDatasetCache.class);
 
-  // Most Linux installs allow a default of 64KB locked memory
-  private static final long CACHE_CAPACITY = 64 * 1024;
   // mlock always locks the entire page. So we don't need to deal with this
   // rounding, use the OS page size for the block size.
   private static final long PAGE_SIZE =
       NativeIO.POSIX.getCacheManipulator().getOperatingSystemPageSize();
   private static final long BLOCK_SIZE = PAGE_SIZE;
+
+  // Reserve a cache big enough to put 5 files
+  private static final long CACHE_CAPACITY = 16 * PAGE_SIZE;
 
   private static Configuration conf;
   private static MiniDFSCluster cluster = null;

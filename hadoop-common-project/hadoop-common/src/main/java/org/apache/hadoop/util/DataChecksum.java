@@ -368,7 +368,8 @@ public class DataChecksum implements Checksum {
    *                  stored. Enough space must be available in this
    *                  buffer to put the checksums.
    */
-  public void calculateChunkedSums(ByteBuffer data, ByteBuffer checksums) {
+  public void calculateChunkedSums(ByteBuffer data, ByteBuffer checksums) 
+  throws ChecksumException{
     if (type.size == 0) return;
     
     if (data.hasArray() && checksums.hasArray()) {
@@ -376,7 +377,10 @@ public class DataChecksum implements Checksum {
           checksums.array(), checksums.arrayOffset() + checksums.position());
       return;
     }
-    
+    if (NativeCrc32.isAvailable()) {
+        NativeCrc32.calculateChunkedSums(bytesPerChecksum, type.id, checksums, data);
+        return;
+    } 
     data.mark();
     checksums.mark();
     try {

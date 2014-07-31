@@ -420,7 +420,11 @@ class BlockReceiver implements Closeable {
    * that they have already been validated.
    */
   private void translateChunks(ByteBuffer dataBuf, ByteBuffer checksumBuf) {
-    diskChecksum.calculateChunkedSums(dataBuf, checksumBuf);
+    try{
+      diskChecksum.calculateChunkedSums(dataBuf, checksumBuf);
+    } catch (ChecksumException ce) {
+      LOG.warn("Checksum error", ce);
+    }
   }
 
   /** 

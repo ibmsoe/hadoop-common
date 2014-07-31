@@ -52,7 +52,7 @@ Note : this source file requires "lz4_encoder.h"
 // Note : explicit functions *_stack* and *_heap* are unaffected by this setting
 #define HEAPMODE 0
 
-
+#include <stdlib.h>
 //**************************************
 // CPU Feature Detection
 //**************************************

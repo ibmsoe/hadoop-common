@@ -113,6 +113,52 @@ static int convert_java_crc_type(JNIEnv *env, jint crc_type) {
   }
 }
 
+JNIEXPORT void JNICALL Java_org_apache_hadoop_util_NativeCrc32_nativeCalculateChunkedSums
+  (JNIEnv *env, jclass clazz, jint bytes_per_checksum, jint j_crc_type, jobject j_sums, jint sums_offset, jobject j_data, jint data_offset, jint data_len)
+{
+  uint8_t * data, *sums_addr, *data_addr;
+  uint32_t * sums;
+
+  int crc_type, ret;
+  sums_addr = (*env)->GetDirectBufferAddress(env, j_sums);
+  data_addr = (*env)->GetDirectBufferAddress(env, j_data);
+
+  if (unlikely(!sums_addr || !data_addr)) {
+    THROW(env, "java/lang/IllegalArgumentException",
+      "input ByteBuffers must be direct buffers");
+    return;
+  }
+  if (unlikely(sums_offset < 0 || data_offset < 0 || data_len < 0)) {
+    THROW(env, "java/lang/IllegalArgumentException",
+      "bad offsets or lengths");
+    return;
+  }
+  if (unlikely(bytes_per_checksum) <= 0) {
+    THROW(env, "java/lang/IllegalArgumentException",
+      "invalid bytes_per_checksum");
+    return;
+  }
+
+  sums = (uint32_t *)(sums_addr + sums_offset);
+  data = data_addr + data_offset;
+
+  crc_type = convert_java_crc_type(env, j_crc_type);
+  if (crc_type == -1) return; // exception already thrown
+
+  // Setup complete. Actually verify checksums.
+  ret = bulk_calculate_crc(data, data_len, sums, crc_type,
+                            bytes_per_checksum);
+
+  if (likely(ret == CHECKSUMS_VALID)) {
+    return;
+  }
+  else{
+    THROW(env, "java/lang/AssertionError",
+      "Bad response code from native bulk_calculate_crc");
+  }
+}
+
+
 JNIEXPORT void JNICALL Java_org_apache_hadoop_util_NativeCrc32_nativeVerifyChunkedSums
   (JNIEnv *env, jclass clazz,
     jint bytes_per_checksum, jint j_crc_type,

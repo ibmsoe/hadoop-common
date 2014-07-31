@@ -165,7 +165,7 @@ public class NativeIO {
       }
 
       public long getOperatingSystemPageSize() {
-        return 4096;
+        return NativeIO.getOperatingSystemPageSize();
       }
 
       public boolean verifyCanMlock() {

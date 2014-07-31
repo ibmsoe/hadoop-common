@@ -71,6 +71,9 @@ abstract class FastByteComparisons {
      * implementation if unable to do so.
      */
     static Comparer<byte[]> getBestComparer() {
+     if(System.getProperties().getProperty("os.arch").contains("ppc64")){
+         return lexicographicalComparerJavaImpl();
+      }
       try {
         Class<?> theClass = Class.forName(UNSAFE_COMPARER_NAME);
 

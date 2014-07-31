@@ -32,12 +32,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import static org.apache.hadoop.util.PlatformName.IBM_JAVA;
+
 /**
  * Test helper class for Java Kerberos setup.
  */
 public class KerberosTestUtils {
   private static String keytabFile = new File(System.getProperty("test.dir", "target"),
-          UUID.randomUUID().toString()).toString();
+          UUID.randomUUID().toString()).getAbsolutePath();
 
   public static String getRealm() {
     return "EXAMPLE.COM";
@@ -65,6 +67,12 @@ public class KerberosTestUtils {
     @Override
     public AppConfigurationEntry[] getAppConfigurationEntry(String name) {
       Map<String, String> options = new HashMap<String, String>();
+       if (IBM_JAVA) {
+       options.put("useKeytab", KerberosTestUtils.getKeytabFile().startsWith("file://") ?   KerberosTestUtils.getKeytabFile() : "file://" +  KerberosTestUtils.getKeytabFile());
+       options.put("principal", principal);
+       options.put("refreshKrb5Config", "true");
+       options.put("credsType", "both");
+      } else {
       options.put("keyTab", KerberosTestUtils.getKeytabFile());
       options.put("principal", principal);
       options.put("useKeyTab", "true");
@@ -74,9 +82,18 @@ public class KerberosTestUtils {
       options.put("renewTGT", "true");
       options.put("refreshKrb5Config", "true");
       options.put("isInitiator", "true");
+      } 
       String ticketCache = System.getenv("KRB5CCNAME");
       if (ticketCache != null) {
+      if (IBM_JAVA) {
+      // IBM JAVA only respect system property and not env variable
+      // The first value searched when "useDefaultCcache" is used.
+      System.setProperty("KRB5CCNAME", ticketCache);
+      options.put("useDefaultCcache", "true");
+      options.put("renewTGT", "true");
+      } else {
         options.put("ticketCache", ticketCache);
+      }
       }
       options.put("debug", "true");
 
