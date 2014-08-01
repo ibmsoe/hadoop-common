@@ -11,7 +11,7 @@ This software carries the same Apache licence version2 as the original without a
 Information regarding Linux on Power can be found at the
 [Developer Works Linux on Power Community](https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=fe313521-2e95-46f2-817d-44a4f27eba32)
 
-You can follow IBM Power Linux on [twitter](htts://twitter.com/ibmpowerlinux)
+You can follow IBM Power Linux on [twitter](https://twitter.com/ibmpowerlinux)
 
 ##Cryptography##
 Be aware that this code contains cryptographic libraries the use, import or export of which is controlled in in many places.
