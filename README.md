@@ -36,7 +36,7 @@ The following components are required prior to building Hadoop:
 
 The gcc compiler and other build tools are available from the [IBM Advance Toolchain](https://www.ibm.com/developerworks/community/wikis/home?lang=en#/wiki/W51a7ffcf4dfd_4b40_9d82_446ebc23c550/page/IBM%20Advance%20Toolchain%20for%20PowerLinux%20Documentation)
 
-IBM SDKs is available from [IBM Hursley](http://w3.hursley.ibm.com/java/jim/ibmsdks/latest/index.html)
+IBM SDKs for big-endian and little-endian Linux are available from [IBM Hursley](http://w3.hursley.ibm.com/java/jim/ibmsdks/latest/index.html)
 
 The remaining tools can be installed with a Linux package manager (eg. yum or apt)
 
