@@ -33,6 +33,11 @@ The following components are required prior to building Hadoop:
 * automake
 * autoconf
 * git
+* [protobuf](https://github.com/ibmsoe/Protobuf)
+* libsnappy,libsnappy-dev (ubuntu)
+* snappy,snappy-devel (RHEL)
+* openssl,openssl-dev (ubuntu)
+* openssl,openssl-devel (RHEL)
 
 The gcc compiler and other build tools are available from the [IBM Advance Toolchain](https://www.ibm.com/developerworks/community/wikis/home?lang=en#/wiki/W51a7ffcf4dfd_4b40_9d82_446ebc23c550/page/IBM%20Advance%20Toolchain%20for%20PowerLinux%20Documentation)
 
@@ -44,9 +49,7 @@ The remaining tools can be installed with a Linux package manager (eg. yum or ap
 * openssl
 * openssh
 * [libsnappy](https://github.com/ibmsoe/snappy)
-* [snappy-java](https://github.com/ibmsoe/snappy-java) A java port of libsnappy
 * zlib
-* [protobuf](https://github.com/ibmsoe/Protobuf)
 * IBM Java run-time. OpenJDK is not usable at the time of writing.
 
 #Building#
