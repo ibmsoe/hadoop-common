@@ -33,7 +33,7 @@ The following components are required prior to building Hadoop:
 * automake
 * autoconf
 * git
-* [protobuf](https://github.com/ibmsoe/Protobuf)
+* [protobuf](https://github.com/ibmsoe/Protobuf) (To be locally built)
 * libsnappy,libsnappy-dev (ubuntu)
 * snappy,snappy-devel (RHEL)
 * openssl,openssl-dev (ubuntu)
@@ -48,7 +48,6 @@ The remaining tools can be installed with a Linux package manager (eg. yum or ap
 ###Runtime requisites###
 * openssl
 * openssh
-* [libsnappy](https://github.com/ibmsoe/snappy)
 * zlib
 * IBM Java run-time. OpenJDK is not usable at the time of writing.
 
