@@ -458,6 +458,7 @@ public class TestShortCircuitCache {
       }
     }, 10, 60000);
     cluster.shutdown();
+    sockDir.close();
   }
 
   @Test(timeout=60000)
@@ -511,5 +512,6 @@ public class TestShortCircuitCache {
       }
     });
     cluster.shutdown();
+    sockDir.close();
   }
 }
